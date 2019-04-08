@@ -7,6 +7,7 @@
  */
 namespace  app\admin\model\movie;
 use basic\ModelBasic;
+use think\Request;
 use traits\ModelTrait;
 
 class Movie extends ModelBasic{
@@ -59,6 +60,10 @@ class Movie extends ModelBasic{
         },$where);
     }
     public static function delCategory($id){
+        $content = MovieContent::where('nid',$id)->value('content');
+        $pattern = '/\\\\/';
+        $dir = preg_replace($pattern,'/',$content);
+        unlink(substr($dir,1));
         return self::del($id);
     }
 }

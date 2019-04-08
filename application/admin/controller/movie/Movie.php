@@ -130,7 +130,7 @@ class Movie extends AuthController{
             Form::input('author','作者姓名')->placeholder('请输入讲师姓名')->required('作者姓名不能为空'),
             Form::input('sort','排序')->required('排序不能为空'),
             Form::textarea('synopsis','视频简介')->rows(4)->required('视频简介不能为空'),
-            Form::uploadFileOne('content','视频',Url::build('admin/widget.files/upload1'))->col('file')->accept('video/mp4')->format(['mp4'])->maxSize('14417295')->required('视频不能为空'),
+            Form::uploadFileOne('content','视频',Url::build('admin/widget.files/upload2'))->col('file')->accept('video/mp4')->format(['mp4'])->maxSize('14417295')->required('视频不能为空'),
             Form::radio('is_show','状态',1)->options([['label'=>'显示','value'=>1],['label'=>'隐藏','value'=>0]])->col(8)
         ];
         $form = Form::make_post_form('添加视频',$field,Url::build('save'),2);
@@ -168,7 +168,7 @@ class Movie extends AuthController{
                 }
                 return $menus;
             })->filterable(1)->required('请选择商品'),
-            Form::uploadFileOne('content','视频',Url::build('admin/widget.files/upload1'))->col('file')->accept('video/mp4')->format(['mp4'])->value($content)->maxSize('51200'),
+            Form::uploadFileOne('content','视频',Url::build('admin/widget.files/upload2'))->col('file')->accept('video/mp4')->format(['mp4'])->value($content)->maxSize('51200'),
             Form::input('author','作者姓名',$c->getData('author'))->placeholder('请输入作者姓名')->required('作者姓名不能为空'),
             Form::radio('type','视频类型',$c->getData('type'))->options([['label'=>'横屏','value'=>1],['label'=>'竖屏','value'=>2]]),
             Form::radio('is_show','状态',$c->getData('is_show'))->options([['label'=>'显示','value'=>1],['label'=>'隐藏','value'=>0]])->col(8),
@@ -179,115 +179,8 @@ class Movie extends AuthController{
         $this->assign(compact('form'));
         return $this->fetch('public/form-builder');
     }
-    /**
-     * 显示编辑子章节单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function  edit_catalog($id){
-        $c=CourseCatalog::get($id);
-        if(!$c) return Json::fail('数据不存在!');
-        $apend=[];
-        if($c->getData('type')==0) {//如果是图文到图文添加页面
-            $this->assign('course_name',MovieModel::where('id',$c->getData('cid'))->value('course_name'));
-            $this->assign('catalog',$c);
-            return $this->fetch();
-        }elseif($c->getData('type')==1){//如果是音频
-            $apend=[
-                Form::uploadFileOne('content','音频',Url::build('admin/widget.files/upload'))->col('file')->accept('audio/mpeg')->format(['mp3'])->value($c->getData('content'))->maxSize('20480'),
-                Form::hidden('old_content',$c->getData('content')),
-            ];
-        }elseif ($c->getData('type')==2){//如果是视频
-            $apend=[
-                Form::uploadImageOne('file','章节封面200*116',Url::build('admin/widget.images/uploadimg'))->accept('image/jpeg,image/png')->format(['jpeg','jpg','png'])
-                    ->required('请上传章节封面')->value($c->getData('pic')),
-                Form::hidden('old_content',$c->getData('content')),
-                Form::uploadFileOne('content','视频',Url::build('admin/widget.files/upload1'))->col('file')->accept('video/mp4')->format(['mp4'])->value($c->getData('content'))->maxSize('51200')
-            ];
-        }
-        $field=[
-            Form::input('','课程名称',MovieModel::where('id',$c->getData('cid'))->value('course_name'))->disabled(1),
-            Form::hidden('type',$c->getData('type')),
-            Form::hidden('id',$c->getData('id')),
-            Form::input('catalog_title','章节标题',$c->getData('catalog_title'))->placeholder('请输入章节标题')->required('章节标题不能为空'),
-            Form::radio('is_free','试听',0)->options([['label'=>'否','value'=>0],['label'=>'是','value'=>1]])->value($c->getData('is_free')),
-            Form::textarea('description','章节简介',$c->getData('description'))->rows(4),
 
-        ];
-        $field=array_merge($field,$apend);
-        $form = Form::make_post_form('编辑课程子章节',$field,Url::build('save_catalog'),2);
-        $this->assign(compact('form'));
-        return $this->fetch('public/form-builder');
-    }
-    /**
-     * 保存新建的子章节资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
-     */
-    public function add_catalog(Request $request){
-        $data=Util::postMore([
-            'cid',
-            'catalog_title',
-            'content',
-            'is_free',
-            ['description',''],
-            'file',
-            'type',
-        ],$request);
-        if($data['catalog_title'] == '') return Json::fail('请输入章节标题');
-        if(empty($data['content']))return Json::fail('请输入章节内容');
-        $data['add_time']=time();
-        if($data['type']==1||$data['type']==2){
-            vendor('getid3.getid3');
-            $mp3 = new \getID3();
-            $info =  $mp3->analyze(ROOT_PATH.DS.$data['content']);
-            $data['length']=$info["playtime_string"];
-        }
-        $data['pic']=$data['file']?:'';
-        unset($data['file']);
-        if(!CourseCatalog::set($data))return Json::fail('添加失败');
-        return Json::successful('添加课程章节成功!');
-    }
-    /**
-     * 保存编辑的子章节资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
-     */
-    public function save_catalog(Request $request){
-        $data=Util::postMore([
-            'id',
-            'catalog_title',
-            'content',
-            'type',
-            ['description',''],
-            ['old_content',''],
-            'file',
-            'is_free',
-        ],$request);
-        if($data['catalog_title'] == '') return Json::fail('请输入章节标题');
-        if(empty('content'))return Json::fail('请输入章节内容');
-        $data['add_time']=time();
-        if($data['type']==1||$data['type']==2){
-            vendor('getid3.getid3');
-            $mp3 = new \getID3();
-            $info =  $mp3->analyze(ROOT_PATH.DS.$data['content']);
-            if(isset($info['playtime_string'])){
-                $data['length']=$info["playtime_string"];
-            }
-            if($data['old_content']!=$data['content']){
-                $filePath=$data['old_content'];
-                @unlink(ROOT_PATH.$filePath);
-            }
-        }
-        $data['pic']=$data['file']?:'';
-        unset($data['file']);
-        unset($data['old_content']);
-        if(!CourseCatalog::edit($data,$data['id']))return Json::fail('编辑失败');
-        return Json::successful('编辑课程章节成功!');
-    }
+
     /**
      * 保存新建的资源
      *
@@ -353,7 +246,6 @@ class Movie extends AuthController{
         if(!$data['image_input']) return Json::fail('请上传视频封面');
         if(!$data['content']) return Json::fail('请上传视频');
 
-        //$data['add_time']=time();
         $content = $data['content'];
         unset($data['content']);
         vendor('getid3.getid3');

@@ -35,8 +35,9 @@ class Movie extends ModelBasic
         $model = self::validWhere();
         if($data['title'] != '') $model = $model->where('title','like',"%$data[title]%");
         if($data['cid'] != '') $model = $model->where('cid',$data['cid']);
-        $count = $model->count();
+
         $list = $model->field($field)->order('sort DESC')->limit($data['page']*$data['limit'],$data['limit'])->select()->toArray();
+        $count = $model->count();
         return compact('count','list');
     }
 

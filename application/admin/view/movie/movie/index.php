@@ -179,7 +179,7 @@
                 })
                 break;
             case 'open_image':
-                $eb.openImage(data.pic);
+                $eb.openImage(data.image_input);
                 break;
         }
     })
