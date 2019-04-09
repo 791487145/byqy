@@ -7,6 +7,7 @@
 
 namespace app\movie\model\movie;
 
+use app\admin\model\movie\MovieContent;
 use app\movie\model\store\StoreProduct;
 use basic\ModelBasic;
 use think\Request;
@@ -27,6 +28,8 @@ class Movie extends ModelBasic
         return date('Y-m-d',$value);
     }
 
+
+
         /**
          * 列表
      * @param string $field
@@ -43,9 +46,12 @@ class Movie extends ModelBasic
 
     public static function getMovie($id,$user_id,$field = '*')
     {
-        $list = self::with('store_product')->where('id',$id)->find();
+        $request = Request::instance();
+        $http = $request->domain();
+        $list = self::with('store_product,movie_content')->where('id',$id)->find();
         $list['collect_status'] = 0;
         $list['like_status'] = 0;
+        $list['movie_content']['content'] = $http.$list['movie_content']['content'];
         self::where('id',$id)->setInc('visit');
         if(MovieLog::where('user_id',$user_id)->where('movie_id',$id)->where('action',1)->count()) $list['collect_status'] = 1;
         if(MovieLog::where('user_id',$user_id)->where('movie_id',$id)->where('action',2)->count()) $list['like_status'] = 1;
@@ -55,6 +61,11 @@ class Movie extends ModelBasic
     public function storeProduct()
     {
         return $this->belongsTo(StoreProduct::class,'goods_id','id')->field('id,image,store_name,store_info,price,sales,stock');
+    }
+
+    public function movieContent()
+    {
+        return $this->belongsTo(MovieContent::class,'id','nid');
     }
 
 }
