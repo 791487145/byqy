@@ -28,7 +28,7 @@ class MovieReply extends ModelBasic{
         foreach ($replies as &$reply){
             $data = array(
                 'user_id' => $user_id,
-                'replay_id' => $reply['id']
+                'reply_id' => $reply['id']
             );
             $reply['user_praise_status'] = 0;
             if(MoviePraiseLog::where($data)->count()) $reply['user_praise_status'] = 1;
