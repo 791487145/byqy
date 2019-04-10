@@ -77,8 +77,47 @@ class Images extends AuthController
     {
         $name='attach';
         if($type==2) $name='avatar';
+        if($type==3) $name='movie';
         try{
             $res = Upload::image('file',$name.DS.date('Y').DS.date('m').DS.date('d'));
+            $thumbPath = Upload::thumb($res->dir);
+            //产品图片上传记录
+            $fileInfo = $res->fileInfo->getinfo();
+            //入口是public需要替换图片路径
+            if(strpos(PUBILC_PATH,'public') == false){
+                $res->dir = str_replace('public/','',$res->dir);
+            }
+
+            $info = array(
+//            "originalName" => $fileInfo['name'],
+//            "name" => $res->fileInfo->getSaveName(),
+//            "url" => '.'.$res->dir,
+//            "size" => $fileInfo['size'],
+//            "type" => $fileInfo['type'],
+//            "state" => "SUCCESS"
+                'code' =>200,
+                'msg'  =>'上传成功',
+                'src'  =>$res->dir,
+                'filePath'  =>$res->dir
+            );
+            return Json::successful('上传成功',$info);
+        }catch (Exception $e){
+            return JsonService::fail('上传失败');
+        }
+
+    }
+
+    /**
+     * 图片管理上传图片
+     * @return \think\response\Json
+     */
+    public function uploadMovieImg(Request $request,$type=1)
+    {
+        $name='attach';
+        if($type==2) $name='avatar';
+        if($type==3) $name='movie/image';
+        try{
+            $res = Upload::image('image_input',$name.DS.date('Y').DS.date('m').DS.date('d'));
             $thumbPath = Upload::thumb($res->dir);
             //产品图片上传记录
             $fileInfo = $res->fileInfo->getinfo();

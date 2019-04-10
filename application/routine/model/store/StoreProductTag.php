@@ -5,7 +5,7 @@
  * @day: 2017/11/11
  */
 
-namespace app\admin\model\store;
+namespace app\routine\model\store;
 
 use service\PHPExcelService;
 use think\Db;
@@ -32,6 +32,7 @@ class StoreProductTag extends ModelBasic
     public static function getTierList($model = null)
     {
         if($model === null) $model = new self();
+        $model = $model->where('is_show',1)->order('sort DESC');
         return $model->select()->toArray();
     }
 

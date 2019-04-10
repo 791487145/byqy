@@ -24,15 +24,16 @@ class StoreSeckill extends ModelBasic
      * @param string $field
      * @return array
      */
-    public static function getListAll($offset = 0,$limit = 10,$field = 'id,product_id,image,title,price,ot_price,start_time,stop_time,stock,sales'){
-        $time = time();
-        $model = self::where('is_del',0)->where('status',1)->where('stock','>',0)->field($field)
-            ->where('start_time','<',$time)->where('stop_time','>',$time)->order('sort DESC,add_time DESC');
+    public static function getListAll($field = 'id,product_id,image,title,price,ot_price,stock,sales',$limit = 10,$offset = 0)
+    {
+        $model = self::where('is_del',0)->where('status',1)->where('stock','>',0)->field($field)->order('sort DESC');
         $model = $model->limit($offset,$limit);
         $list = $model->select();
         if($list) return $list->toArray();
         else return [];
     }
+
+
     /**
      * 获取热门推荐的秒杀产品
      * @param int $limit

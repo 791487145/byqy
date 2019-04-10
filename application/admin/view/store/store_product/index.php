@@ -41,6 +41,17 @@
                                 </div>
                             </div>
                             <div class="layui-inline">
+                                <label class="layui-form-label">所有标签</label>
+                                <div class="layui-input-block">
+                                    <select name="tag_id">
+                                        <option value=" ">全部</option>
+                                        {volist name='tag' id='vol'}
+                                        <option value="{$vol.id}">{$vol.tag_name}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
                                 <label class="layui-form-label">产品名称</label>
                                 <div class="layui-input-block">
                                     <input type="text" name="store_name" class="layui-input" placeholder="请输入产品名称,关键字,编号">

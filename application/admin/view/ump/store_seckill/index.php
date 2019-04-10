@@ -121,7 +121,7 @@
             {field: 'price', title: '秒杀价',width:'6%'},
             {field: 'stock', title: '库存',width:'6%'},
             {field: 'start_name', title: '秒杀状态',width:'8%',toolbar:"#statusCn"},
-            {field: 'stop_time', title: '结束时间', width: '13%',toolbar: '#stopTime'},
+           /* {field: 'stop_time', title: '结束时间', width: '13%',toolbar: '#stopTime'},*/
             {field: 'status', title: '状态',width:'6%',toolbar:"#status"},
             {field: 'right', title: '操作', width: '6%', align: 'center', toolbar: '#barDemo'}
         ]

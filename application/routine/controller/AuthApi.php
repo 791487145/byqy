@@ -2,6 +2,7 @@
 namespace app\routine\controller;
 
 use Api\Express;
+use app\routine\model\store\StoreProductTag as TagModel;
 use app\routine\model\material\Material;
 use app\routine\model\material\MaterialCategory;
 use think\Validate;
@@ -100,24 +101,36 @@ class AuthApi extends AuthController{
      * 首页
      */
     public function index(){
-        $banner = GroupDataService::getData('routine_home_banner')?:[];//banner图
-        $menus = GroupDataService::getData('routine_home_menus')?:[];//限时优惠
-        $active_banner = GroupDataService::getData('routine_home_active_banner',1)?:[];//活动图
-        //$lovely = GroupDataService::getData('routine_lovely')?:[];//猜你喜欢图
-        $special_goods = GroupDataService::getData('routine_tese_product',5)?:[];//特色商品
+        $banner = GroupDataService::getData('byqy_shop_home_banner')?:[];//banner图
+        $active = GroupDataService::getData('buqy_home_active')?:[];//活动
+        $ad_banner = GroupDataService::getData('byqy_home_ad')?:[];//广告
 
-        $best = StoreProduct::getBestProduct('id,image,store_name,cate_id,price,unit_name,sort',8);//红色商品
-        /*$new = StoreProduct::getNewProduct('id,image,store_name,cate_id,price,unit_name,sort',3);//今日上新
-        $hot = StoreProduct::getHotProduct('id,image,store_name,cate_id,price,unit_name,sort',6);//猜你喜欢*/
+        $best = StoreProduct::getBestProduct('id,image,store_name,cate_id,price,unit_name,sort,ot_price',6);//精品特价
+        $seckill = StoreSeckill::getListAll('id,product_id,image,title,price,ot_price,stock,sales,unit_name',6);//秒杀
+        $product_tag = TagModel::getTierList();//标签
+
         $data['banner'] = $banner;
-        //$data['lovely'] = $lovely[0];
-        $data['menus'] = $menus;
+        $data['active'] = $active;
         $data['best'] = $best;
-        $data['active_banner'] = $active_banner;
-        $data['special_goods'] = $special_goods;
-        //$data['new'] = $new;
-        //$data['hot'] = $hot;
+        $data['seckill'] = $seckill;
+        $data['ad_banner'] = $ad_banner;
+        $data['product_tag'] = $product_tag;
+
         return JsonService::successful($data);
+    }
+
+    /**
+     * 标签商品
+     * @param Request $request
+     * @return \think\response\Json
+     */
+    public function get_tag_product(Request $request){
+        $model = StoreProduct::validWhere();
+        $data = UtilService::postMore(['tag_id'],$request);
+        if(!$data['tag_id']) return JsonService::fail('参数不全');
+        $model = $model->where('tag_id',$data['tag_id']);
+        $list = $model->field('id,store_name,cate_id,image,sales,price,stock,ot_price')->limit(6)->select()->toArray();
+        return JsonService::successful($list);
     }
 
     /**

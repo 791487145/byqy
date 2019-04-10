@@ -78,7 +78,7 @@ class StoreSeckill extends AuthController
         $f[] = Form::input('title','产品标题');
         $f[] = Form::input('info','秒杀活动简介')->type('textarea');
         $f[] = Form::input('unit_name','单位')->placeholder('个、位');
-        $f[] = Form::dateTimeRange('section_time','活动时间');
+       /* $f[] = Form::dateTimeRange('section_time','活动时间');*/
         $f[] = Form::frameImageOne('image','产品主图片(305*305px)',Url::build('admin/widget.images/index',array('fodder'=>'image')))->icon('image');
         $f[] = Form::frameImages('images','产品轮播图(640*640px)',Url::build('admin/widget.images/index',array('fodder'=>'images')))->maxLength(5)->icon('images');
         $f[] = Form::number('price','秒杀价')->min(0)->col(12);
@@ -119,7 +119,7 @@ class StoreSeckill extends AuthController
             'sort',
             'give_integral',
             'postage',
-            ['section_time',[]],
+           // ['section_time',[]],
             ['is_postage',0],
             ['cost',0],
             ['is_hot',0],
@@ -130,7 +130,7 @@ class StoreSeckill extends AuthController
         if(!$data['unit_name']) return Json::fail('请输入产品单位');
         if(!$data['product_id']) return Json::fail('产品ID不能为空');
 //        var_dump($this->request->post());
-        if(count($data['section_time'])<1) return Json::fail('请选择活动时间');
+       // if(count($data['section_time'])<1) return Json::fail('请选择活动时间');
         $data['start_time'] = strtotime($data['section_time'][0]);
         $data['stop_time'] = strtotime($data['section_time'][1]);
         unset($data['section_time']);
@@ -167,7 +167,7 @@ class StoreSeckill extends AuthController
         $f[] = Form::hidden('product_id',$id);
         $f[] = Form::input('info','秒杀活动简介',$product->getData('store_info'))->type('textarea');
         $f[] = Form::input('unit_name','单位',$product->getData('unit_name'))->placeholder('个、位');
-        $f[] = Form::dateTimeRange('section_time','活动时间');
+        //$f[] = Form::dateTimeRange('section_time','活动时间');
         $f[] = Form::frameImageOne('image','产品主图片(305*305px)',Url::build('admin/widget.images/index',array('fodder'=>'image')),$product->getData('image'))->icon('image');
         $f[] = Form::frameImages('images','产品轮播图(640*640px)',Url::build('admin/widget.images/index',array('fodder'=>'images')),json_decode($product->getData('slider_image')))->maxLength(5)->icon('images');
         $f[] = Form::number('price','秒杀价')->min(0)->col(12);
@@ -222,7 +222,7 @@ class StoreSeckill extends AuthController
         $f[] = Form::input('title','产品标题',$product->getData('title'));
         $f[] = Form::input('info','秒杀活动简介',$product->getData('info'))->type('textarea');
         $f[] = Form::input('unit_name','单位',$product->getData('unit_name'))->placeholder('个、位');
-        $f[] = Form::dateTimeRange('section_time','活动时间',$product->getData('start_time'),$product->getData('stop_time'));
+        //$f[] = Form::dateTimeRange('section_time','活动时间',$product->getData('start_time'),$product->getData('stop_time'));
         $f[] = Form::frameImageOne('image','产品主图片(305*305px)',Url::build('admin/widget.images/index',array('fodder'=>'image')),$product->getData('image'))->icon('image');
         $f[] = Form::frameImages('images','产品轮播图(640*640px)',Url::build('admin/widget.images/index',array('fodder'=>'images')),json_decode($product->getData('images')))->maxLength(5)->icon('images');
         $f[] = Form::number('price','秒杀价',$product->getData('price'))->min(0)->col(12);

@@ -28,6 +28,12 @@ class Movie extends ModelBasic
         return date('Y-m-d',$value);
     }
 
+    public function getImageInputAttr($value){
+        $request = Request::instance();
+        $http = $request->domain();
+        return $http.$value;
+    }
+
 
 
         /**

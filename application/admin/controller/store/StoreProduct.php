@@ -16,6 +16,7 @@ use service\UploadService as Upload;
 use think\Request;
 use app\admin\model\store\StoreCategory as CategoryModel;
 use app\admin\model\store\StoreProduct as ProductModel;
+use app\admin\model\store\StoreProductTag as TagModel;
 use think\Url;
 
 use app\admin\model\system\SystemAttachment;
@@ -44,6 +45,7 @@ class StoreProduct extends AuthController
         $type=$this->request->param('type');
         //获取分类
         $this->assign('cate',CategoryModel::getTierList());
+        $this->assign('tag',TagModel::getTierList());
         //出售中产品
         $onsale =  ProductModel::where(['is_show'=>1,'is_del'=>0])->count();
         //待上架产品
@@ -71,6 +73,7 @@ class StoreProduct extends AuthController
             ['limit',20],
             ['store_name',''],
             ['cate_id',''],
+            ['tag_id',''],
             ['excel',0],
             ['type',$this->request->param('type')]
         ]);
@@ -139,6 +142,14 @@ class StoreProduct extends AuthController
                 }
                 return $menus;
             })->filterable(1)->multiple(1)->required(),
+            Form::select('tag_id','产品标签')->setOptions(function(){
+                $list = TagModel::getTierList();
+                $menus=[];
+                foreach ($list as $menu){
+                    $menus[] = ['value'=>$menu['id'],'label'=>$menu['tag_name']];
+                }
+                return $menus;
+            })->filterable(1)->required(),
             Form::input('store_name','产品名称')->col(Form::col(24))->validateFn(function($validate){
                 $validate->min(5)->max(32);
             })->required(),
@@ -211,6 +222,7 @@ class StoreProduct extends AuthController
             'stock',
             'sales',
             'ficti',
+            ['tag_id',0],
             ['give_integral',0],
             ['is_show',0],
             ['cost',0],
@@ -235,6 +247,7 @@ class StoreProduct extends AuthController
         if($data['cost'] == '' || $data['ot_price'] < 0) return Json::fail('请输入产品成本价');
         if($data['sales'] == '' || $data['sales'] < 0) return Json::fail('请输入销量');
         if($data['give_integral'] < 0) return Json::fail('请输入赠送积分');
+        if(!$data['tag_id']) return Json::fail('请输入标签');
         $data['image'] = $data['image'][0];
         $data['slider_image'] = json_encode($data['slider_image']);
         $data['add_time'] = time();
@@ -276,6 +289,14 @@ class StoreProduct extends AuthController
                 }
                 return $menus;
             })->filterable(1)->multiple(1),
+            Form::select('tag_id','产品标签',(string)$product->getData('tag_id'))->setOptions(function(){
+                $list = TagModel::getTierList();
+                $menus=[];
+                foreach ($list as $menu){
+                    $menus[] = ['value'=>$menu['id'],'label'=>$menu['tag_name']];//,'disabled'=>$menu['pid']== 0];
+                }
+                return $menus;
+            })->filterable(1)->required('请选择标签'),
             Form::input('store_name','产品名称',$product->getData('store_name')),
             Form::input('store_info','产品简介',$product->getData('store_info'))->type('textarea'),
             Form::input('keyword','产品关键字',$product->getData('keyword'))->placeholder('多个用英文状态下的逗号隔开'),
@@ -329,6 +350,7 @@ class StoreProduct extends AuthController
             'stock',
 //            'sales',
             'ficti',
+            ['tag_id',0],
             ['give_integral',0],
             ['is_show',0],
             ['cost',0],
@@ -354,6 +376,7 @@ class StoreProduct extends AuthController
         if($data['stock'] == '' || $data['stock'] < 0) return Json::fail('请输入库存');
 //        if($data['sales'] == '' || $data['sales'] < 0) return Json::fail('请输入销量');
         if($data['give_integral'] < 0) return Json::fail('请输入赠送积分');
+        if(!$data['tag_id']) return Json::fail('请输入标签');
         $data['image'] = $data['image'][0];
         $data['slider_image'] = json_encode($data['slider_image']);
         ProductModel::edit($data,$id);
