@@ -131,7 +131,7 @@ class AuthApi extends AuthController{
         $data = UtilService::postMore(['tag_id'],$request);
         if(!$data['tag_id']) return JsonService::fail('参数不全');
         $model = $model->where('tag_id',$data['tag_id']);
-        $list = $model->field('id,store_name,cate_id,image,sales,price,stock,ot_price')->limit(6)->select()->toArray();
+        $list = $model->field('id,store_name,cate_id,image,sales,price,stock,ot_price,store_info')->limit(6)->select()->toArray();
         return JsonService::successful($list);
     }
 
