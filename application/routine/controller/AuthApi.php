@@ -365,10 +365,13 @@ class AuthApi extends AuthController{
      * @return \think\response\Json
      */
     public function seckill_index(){
+        $data['lovely']=[];
         $lovely = GroupDataService::getData('routine_lovely',1)?:[];//banner图
         $seckill = StoreSeckill::where('is_del',0)->where('status',1)->where('start_time','<',time())->where('stop_time','>',time())->order('sort desc')->select()->toArray();
         $data['seckill'] = $seckill;
-        $data['lovely'] = $lovely[0];
+        if($lovely){
+            $data['lovely'] = $lovely[0];
+        }
         return JsonService::successful($data);
     }
     /**
