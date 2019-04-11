@@ -13,8 +13,8 @@
         }
         body {background: #000;font-size: 14px;color: #666;}
         .page {background: #fff;width: 100%;height: 100%;position: absolute;margin-left: 0%;overflow: hidden;}
-        .img {}
-        .img img {width: 100%;display: block;}
+        .img {overflow: hidden}
+        .img img {width:100%;max-height:350px;display: block;}
         .title {padding: 20px 10px;line-height: 20px;font-size: 16px;color: #333;}
         .line {border-top: 1px dashed #ccc;margin: 0px 0px;position: relative;}
         .line::before,.line::after{content: "";background: #ccc;width: 10px;height: 10px;border-radius:100em ;left: -5px;top:-5px;position:absolute;}
