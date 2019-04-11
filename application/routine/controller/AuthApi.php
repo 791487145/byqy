@@ -5,6 +5,8 @@ use Api\Express;
 use app\routine\model\store\StoreProductTag as TagModel;
 use app\routine\model\material\Material;
 use app\routine\model\material\MaterialCategory;
+use Knp\Snappy\Image;
+use Knp\Snappy\Pdf;
 use think\Validate;
 use service\UtilService as Util;
 use app\admin\model\store\StoreVisit;
@@ -2618,4 +2620,5 @@ class AuthApi extends AuthController{
         $list = Material::getAll($where,$filed,$first,$limit);
         return JsonService::successful($list);
     }
+
 }

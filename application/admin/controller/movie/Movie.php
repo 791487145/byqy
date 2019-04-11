@@ -115,7 +115,9 @@ class Movie extends AuthController{
                 return $menus;
             })->filterable(1)->required('请选择视频分类'),
             Form::input('title','视频名称')->required('视频名称不能为空'),
-            Form::uploadFileOne('image_input','视频封面',Url::build('admin/widget.images/uploadMovieImg?type=3'))->col('file')->required('请上传视频封面'),
+
+            Form::uploadImageOne('image_input','视频封面171*171',Url::build('admin/widget.images/uploadMovieImg?type=3'))->accept('image/jpeg,image/png')->format(['jpeg','jpg','png'])
+            ->required('请上传视频封面'),
             Form::radio('type','视频类型',1)->options([['label'=>'横屏','value'=>1],['label'=>'竖屏','value'=>2]]),
 
             Form::select('goods_id','商品id')->setOptions(function(){
@@ -158,7 +160,9 @@ class Movie extends AuthController{
             })->filterable(1)->required('请选择视频分类'),
             Form::input('title','视频名称',$c->getData('title'))->required('视频名称不能为空'),
             Form::input('sort','视频排序',$c->getData('sort'))->required('视频排序不能为空'),
-            Form::uploadFileOne('image_input','视频封面',Url::build('admin/widget.images/uploadMovieImg?type=3'))->col('file')->value($c->getData('image_input'))->required('请上传视频封面'),
+
+            Form::uploadImageOne('image_input','视频封面171*171',Url::build('admin/widget.images/uploadMovieImg?type=3'),$c->getData('image_input'))->accept('image/jpeg,image/png')->format(['jpeg','jpg','png'])
+                ->required('请上传视频封面'),
             Form::select('goods_id','商品',(String)$c->getData('goods_id'))->setOptions(function(){
                 $list = StoreProduct::where('is_show',1)->where('is_del',0)->select()->toArray();
                 foreach ($list as $menu){
@@ -249,7 +253,9 @@ class Movie extends AuthController{
         vendor('getid3.getid3');
         $mp3 = new \getID3();
         $info =  $mp3->analyze(ROOT_PATH.DS.$content);
-        $data['length']=$info["playtime_string"];
+        if(isset($info['playtime_string'])){
+            $data['length']=$info["playtime_string"];
+        }
         MovieModel::edit($data,$id);
         $data1 = array(
             'content' => $content

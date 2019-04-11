@@ -26,7 +26,10 @@
         "tp5er/tp5-databackup": "^1.0",
         "phpoffice/phpexcel": "^1.8",
         "xaviertony/xavier-swoole": "^0.33.0",
-        "wycto/sms": "^0.1.0"
+        "wycto/sms": "^0.1.0",
+        "knplabs/knp-snappy": "^1.1",
+        "h4cc/wkhtmltoimage-amd64": "0.12.x",
+        "h4cc/wkhtmltopdf-amd64": "0.12.x"
     },
     "extra": {
         "think-path": "thinkphp"

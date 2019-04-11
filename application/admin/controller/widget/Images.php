@@ -79,7 +79,7 @@ class Images extends AuthController
         if($type==2) $name='avatar';
         if($type==3) $name='movie';
         try{
-            $res = Upload::image('file',$name.DS.date('Y').DS.date('m').DS.date('d'));
+            $res = Upload::image('image_input',$name.DS.date('Y').DS.date('m').DS.date('d'));
             $thumbPath = Upload::thumb($res->dir);
             //产品图片上传记录
             $fileInfo = $res->fileInfo->getinfo();

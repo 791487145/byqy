@@ -70,4 +70,5 @@ class StoreProductTag extends ModelBasic
 
         },$where);
     }
+
 }

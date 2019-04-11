@@ -8,6 +8,7 @@
 namespace app\movie\model\movie;
 
 use app\admin\model\movie\MovieContent;
+use app\admin\model\system\SystemConfig;
 use app\movie\model\store\StoreProduct;
 use basic\ModelBasic;
 use think\Request;
@@ -29,9 +30,7 @@ class Movie extends ModelBasic
     }
 
     public function getImageInputAttr($value){
-        $request = Request::instance();
-        $http = $request->domain();
-        return $http.$value;
+        return str_replace('https','http',SystemConfig::getValue('site_url')).$value;
     }
 
 

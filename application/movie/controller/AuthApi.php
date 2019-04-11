@@ -2,6 +2,7 @@
 namespace app\movie\controller;
 
 use Api\Express;
+use app\admin\model\system\SystemConfig;
 use app\movie\model\movie\Movie;
 use app\movie\model\movie\MovieCategory;
 use app\movie\model\movie\MovieLog;
@@ -9,6 +10,7 @@ use app\movie\model\movie\MoviePraiseLog;
 use app\movie\model\movie\MovieReply;
 use app\movie\model\movie\MovieReplyPraiseLog;
 use behavior\routine\RoutineBehavior;
+use Knp\Snappy\Image;
 use service\JsonService;
 use service\GroupDataService;
 use service\RoutineBizDataCrypt;
@@ -202,5 +204,34 @@ class AuthApi extends AuthController{
 
         return JsonService::successful('操作成功');
     }
-
+    /**
+     * 生成视频海报图片
+     */
+    public function createPoster(){
+        $data=UtilService::postMore([
+            ['id',0],
+        ],$this->request);
+        $movieinfo=Movie::where('id',$data['id'])->field('id,title,image_input')->find();
+        if(!$movieinfo||!$data['id'])return JsonService::fail('生成图片失败,视频不存在');
+        $file=ROOT_PATH.DS.UPLOAD_PATH.'/poster/movie-poster-'.$movieinfo->id.'.png';
+        try{
+            $snappy=new Image(ROOT_PATH.'vendor/h4cc/wkhtmltoimage-amd64/bin/wkhtmltoimage-amd64');
+            $this->assign([
+                'title'=>$movieinfo->title,
+                'pic'=>'http://byqy.7reach.cn'.$movieinfo->image_input,
+            ]);
+            $html=$this->fetch('admin@poster/index');
+//            return $html;
+            $snappy->setOption('width',375);
+            $snappy->setOption('height',650);
+            $snappy->setOption('format','png');
+            if (file_exists($file)) {
+                @unlink($file);
+            }
+            $snappy->generateFromHtml($html, $file);
+        }catch (\Exception $e){
+            return JsonService::fail('生成图片失败'.$e->getMessage());
+        }
+        return JsonService::successful('生成图片成功',SystemConfig::getValue('site_url').DS.UPLOAD_PATH.'/poster/movie-poster-'.$movieinfo->id.'.png');
+    }
 }

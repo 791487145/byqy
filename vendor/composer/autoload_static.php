@@ -35,6 +35,10 @@ class ComposerStaticInit34eab264abc3ceb8f815f4aeec1c4520
             'think\\captcha\\' => 14,
             'think\\' => 6,
         ),
+        'h' => 
+        array (
+            'h4cc\\WKHTMLToPDF\\' => 17,
+        ),
         'X' => 
         array (
             'XCron\\' => 6,
@@ -44,6 +48,7 @@ class ComposerStaticInit34eab264abc3ceb8f815f4aeec1c4520
             'Symfony\\Polyfill\\Util\\' => 22,
             'Symfony\\Polyfill\\Php56\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Component\\Process\\' => 26,
             'Symfony\\Component\\HttpFoundation\\' => 33,
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
             'SuperClosure\\' => 13,
@@ -63,6 +68,10 @@ class ComposerStaticInit34eab264abc3ceb8f815f4aeec1c4520
         'M' => 
         array (
             'Monolog\\' => 8,
+        ),
+        'K' => 
+        array (
+            'Knp\\Snappy\\' => 11,
         ),
         'G' => 
         array (
@@ -114,6 +123,10 @@ class ComposerStaticInit34eab264abc3ceb8f815f4aeec1c4520
             0 => __DIR__ . '/../..' . '/thinkphp/library/think',
             1 => __DIR__ . '/..' . '/topthink/think-image/src',
         ),
+        'h4cc\\WKHTMLToPDF\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/h4cc/wkhtmltopdf-amd64',
+        ),
         'XCron\\' => 
         array (
             0 => __DIR__ . '/..' . '/xavier/xcron-expression/src/Cron',
@@ -129,6 +142,10 @@ class ComposerStaticInit34eab264abc3ceb8f815f4aeec1c4520
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Component\\Process\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/process',
         ),
         'Symfony\\Component\\HttpFoundation\\' => 
         array (
@@ -169,6 +186,10 @@ class ComposerStaticInit34eab264abc3ceb8f815f4aeec1c4520
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
+        ),
+        'Knp\\Snappy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/knplabs/knp-snappy/src/Knp/Snappy',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
