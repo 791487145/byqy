@@ -3,10 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>海报</title>
-    <meta
-            name="viewport"
-            content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=0"
-    />
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <style>
         body,
         div,
