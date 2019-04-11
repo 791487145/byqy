@@ -47,7 +47,6 @@ class AuthApi extends AuthController{
             ['page',0],
             ['limit',20]
         ],$request);
-
         $list = Movie::getList('id,cid,title,image_input,goods_id,length,type',$data);
         return JsonService::successful($list);
     }

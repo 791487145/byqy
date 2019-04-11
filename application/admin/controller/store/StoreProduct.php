@@ -141,7 +141,7 @@ class StoreProduct extends AuthController
                     $menus[] = ['value'=>$menu['id'],'label'=>$menu['html'].$menu['cate_name'],'disabled'=>$menu['pid']== 0];//,'disabled'=>$menu['pid']== 0];
                 }
                 return $menus;
-            })->filterable(1)->multiple(1)->required(),
+            })->filterable(1)->multiple(1),
             Form::select('tag_id','产品标签')->setOptions(function(){
                 $list = TagModel::getTierList();
                 $menus=[];
@@ -171,10 +171,7 @@ class StoreProduct extends AuthController
             Form::number('cost','产品成本价')->min(0)->col(8),
             Form::number('sort','排序',0)->col(8)->required(),
             Form::radio('is_show','产品状态',0)->options([['label'=>'上架','value'=>1],['label'=>'下架','value'=>0]])->col(8),
-            Form::radio('is_hot','热卖单品',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_benefit','促销单品',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_best','精品推荐',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_new','首发新品',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::radio('is_best','精选特价',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
             Form::radio('is_postage','是否包邮',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8)
         ];
         $form = Form::make_post_form('添加产品',$field,Url::build('save'),2);
@@ -296,7 +293,7 @@ class StoreProduct extends AuthController
                     $menus[] = ['value'=>$menu['id'],'label'=>$menu['tag_name']];//,'disabled'=>$menu['pid']== 0];
                 }
                 return $menus;
-            })->filterable(1)->required('请选择标签'),
+            })->filterable(1),
             Form::input('store_name','产品名称',$product->getData('store_name')),
             Form::input('store_info','产品简介',$product->getData('store_info'))->type('textarea'),
             Form::input('keyword','产品关键字',$product->getData('keyword'))->placeholder('多个用英文状态下的逗号隔开'),
@@ -313,10 +310,7 @@ class StoreProduct extends AuthController
             Form::number('cost','产品成本价',$product->getData('cost'))->min(0)->col(8),
             Form::number('sort','排序',$product->getData('sort'))->col(8),
             Form::radio('is_show','产品状态',$product->getData('is_show'))->options([['label'=>'上架','value'=>1],['label'=>'下架','value'=>0]])->col(8),
-            Form::radio('is_hot','热卖单品',$product->getData('is_hot'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_benefit','促销单品',$product->getData('is_benefit'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_best','精品推荐',$product->getData('is_best'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
-            Form::radio('is_new','首发新品',$product->getData('is_new'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
+            Form::radio('is_best','精选特价',$product->getData('is_best'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8),
             Form::radio('is_postage','是否包邮',$product->getData('is_postage'))->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(8)
         ];
         $form = Form::make_post_form('编辑产品',$field,Url::build('update',array('id'=>$id)),2);
