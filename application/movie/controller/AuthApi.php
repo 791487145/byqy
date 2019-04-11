@@ -218,7 +218,7 @@ class AuthApi extends AuthController{
             $snappy=new Image(ROOT_PATH.'vendor/h4cc/wkhtmltoimage-amd64/bin/wkhtmltoimage-amd64');
             $this->assign([
                 'title'=>$movieinfo->title,
-                'pic'=>'http://byqy.7reach.cn'.$movieinfo->image_input,
+                'pic'=>$movieinfo->image_input,
             ]);
             $html=$this->fetch('admin@poster/index');
 //            return $html;
