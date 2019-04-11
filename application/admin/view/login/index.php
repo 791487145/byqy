@@ -20,7 +20,7 @@
 <div class="middle-box text-center loginscreen  animated fadeInDown">
     <div class="login-group">
         <h3 class="login-logo">
-            <img src="{__ADMIN_PATH}images/logo.png">
+           <img src="{__ADMIN_PATH}images/logo.png">
         </h3>
         <form role="form" action="{:url('verify')}" method="post">
             <div class="form-group">

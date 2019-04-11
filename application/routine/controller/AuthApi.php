@@ -107,7 +107,7 @@ class AuthApi extends AuthController{
         $active = GroupDataService::getData('buqy_home_active')?:[];//活动
         $ad_banner = GroupDataService::getData('byqy_home_ad')?:[];//广告
 
-        $best = StoreProduct::getBestProduct('id,image,store_name,cate_id,price,unit_name,sort,ot_price',6);//精品特价
+        $best = StoreProduct::getBestProduct('id,image,store_name,cate_id,price,unit_name,sort,ot_price,store_info',6);//精品特价
         $seckill = StoreSeckill::getListAll('id,product_id,image,title,price,ot_price,stock,sales,unit_name',6);//秒杀
         $product_tag = TagModel::getTierList();//标签
 

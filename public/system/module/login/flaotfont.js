@@ -606,7 +606,7 @@ scene.run();
 
 // const pointer = new Pointer(canvas);
 
-var phrase = ' 万德邦 ';
+var phrase = ' 北印青越 ';
 
 var r = new Rope({
     x: scene.canvas.width * 0.15,
