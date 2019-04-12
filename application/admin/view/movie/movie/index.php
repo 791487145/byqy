@@ -112,7 +112,7 @@
             {field: 'pic', title: '视频封面',templet:'#pic'},
             {field: 'visit', title: '浏览量',templet:'#visit',width:'6%'},
             {field: 'author', title: '作者',templet:'#author',width:'6%'},
-            {field: 'good_name', title: '商品名',templet:'#good_name',width:'6%'},
+            {field: 'good_name', title: '商品名',templet:'#good_name',width:'20%'},
             {field: 'replay_num', title: '评论数',templet:'#replay_num',width:'6%'},
             {field: 'collect_num', title: '收藏',templet:'#collect_num',width:'6%'},
             {field: 'is_show', title: '状态',templet:'#is_show',width:'6%'},

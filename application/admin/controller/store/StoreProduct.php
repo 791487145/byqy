@@ -244,7 +244,7 @@ class StoreProduct extends AuthController
         if($data['cost'] == '' || $data['ot_price'] < 0) return Json::fail('请输入产品成本价');
         if($data['sales'] == '' || $data['sales'] < 0) return Json::fail('请输入销量');
         if($data['give_integral'] < 0) return Json::fail('请输入赠送积分');
-        if(!$data['tag_id']) return Json::fail('请输入标签');
+//        if(!$data['tag_id']) return Json::fail('请输入标签');
         $data['image'] = $data['image'][0];
         $data['slider_image'] = json_encode($data['slider_image']);
         $data['add_time'] = time();
@@ -370,7 +370,7 @@ class StoreProduct extends AuthController
         if($data['stock'] == '' || $data['stock'] < 0) return Json::fail('请输入库存');
 //        if($data['sales'] == '' || $data['sales'] < 0) return Json::fail('请输入销量');
         if($data['give_integral'] < 0) return Json::fail('请输入赠送积分');
-        if(!$data['tag_id']) return Json::fail('请输入标签');
+//        if(!$data['tag_id']) return Json::fail('请输入标签');
         $data['image'] = $data['image'][0];
         $data['slider_image'] = json_encode($data['slider_image']);
         ProductModel::edit($data,$id);
