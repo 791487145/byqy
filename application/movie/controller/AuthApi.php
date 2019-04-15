@@ -30,9 +30,11 @@ class AuthApi extends AuthController{
     /**
      * 首页banner,cate
      */
-    public function index(){
+    public function index()
+    {
         $data['banner'] = GroupDataService::getData('byqy_home_banner')?:[];//banner图
         $data['movie_cate'] = MovieCategory::where('is_show',1)->field('id,title,is_show')->select()->toArray();//菜单
+        $data['status'] = 1;
         return JsonService::successful($data);
     }
 
