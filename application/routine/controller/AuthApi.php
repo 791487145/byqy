@@ -117,6 +117,7 @@ class AuthApi extends AuthController{
         $data['seckill'] = $seckill;
         $data['ad_banner'] = $ad_banner;
         $data['product_tag'] = $product_tag;
+        $data['status'] = 1;
 
         return JsonService::successful($data);
     }
