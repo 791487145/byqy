@@ -10,7 +10,7 @@
                     <form class="layui-form layui-form-pane" action="">
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <label class="layui-form-label">所有课程</label>
+                                <label class="layui-form-label">所有视频</label>
                                 <div class="layui-input-block">
                                     <select name="is_show">
                                         <option value="">是否显示</option>
@@ -60,12 +60,12 @@
         <!--产品列表-->
         <div class="layui-col-md12">
             <div class="layui-card">
-                <div class="layui-card-header">课程列表</div>
+                <div class="layui-card-header">视频列表</div>
                 <div class="layui-card-body">
 
                     <div class="layui-btn-container">
 
-                        <button type="button" class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}')">添加课程</button>
+                        <button type="button" class="layui-btn layui-btn-sm" onclick="$eb.createModalFrame(this.innerText,'{:Url('create')}')">添加视频</button>
                     </div>
                     <table class="layui-hide" id="List" lay-filter="List"></table>
                     <script type="text/html" id="pic">
@@ -111,7 +111,7 @@
             {field: 'title', title: '视频名称',edit:'title'},
             {field: 'pic', title: '视频封面',templet:'#pic'},
             {field: 'visit', title: '浏览量',templet:'#visit',width:'6%'},
-            {field: 'author', title: '作者',templet:'#author',width:'6%'},
+           /* {field: 'author', title: '作者',templet:'#author',width:'6%'},*/
             {field: 'good_name', title: '商品名',templet:'#good_name',width:'20%'},
             {field: 'replay_num', title: '评论数',templet:'#replay_num',width:'6%'},
             {field: 'collect_num', title: '收藏',templet:'#collect_num',width:'6%'},

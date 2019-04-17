@@ -128,7 +128,7 @@ class Movie extends AuthController{
                 return $menus;
             })->filterable(1)->required('商品不能为空'),
 
-            Form::input('author','作者姓名')->placeholder('请输入讲师姓名')->required('作者姓名不能为空'),
+           // Form::input('author','作者姓名')->placeholder('请输入讲师姓名')->required('作者姓名不能为空'),
             Form::input('sort','排序')->required('排序不能为空'),
             Form::textarea('synopsis','视频简介')->rows(4)->required('视频简介不能为空'),
             Form::uploadFileOne('content','视频',Url::build('admin/widget.files/upload2'))->col('file')->accept('video/mp4')->format(['mp4'])->maxSize('14417295')->required('视频不能为空'),
@@ -171,7 +171,7 @@ class Movie extends AuthController{
                 return $menus;
             })->filterable(1)->required('请选择商品'),
             Form::uploadFileOne('content','视频',Url::build('admin/widget.files/upload2'))->col('file')->accept('video/mp4')->format(['mp4'])->value($content)->maxSize('51200'),
-            Form::input('author','作者姓名',$c->getData('author'))->placeholder('请输入作者姓名')->required('作者姓名不能为空'),
+           // Form::input('author','作者姓名',$c->getData('author'))->placeholder('请输入作者姓名')->required('作者姓名不能为空'),
             Form::radio('type','视频类型',$c->getData('type'))->options([['label'=>'横屏','value'=>1],['label'=>'竖屏','value'=>2]]),
             Form::radio('is_show','状态',$c->getData('is_show'))->options([['label'=>'显示','value'=>1],['label'=>'隐藏','value'=>0]])->col(8),
             Form::textarea('synopsis','视频简介',$c->getData('synopsis'))->rows(4)->required('视频简介不能为空'),
